@@ -1,0 +1,400 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+`---
+title: "Import data"
+author: "FrempongManso Nana O."
+output: github_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r load-packages,message=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(colorspace)
+install.packages("colorspace")
+```
+
+```{r pollutants and datasets, message=TRUE}
+# Read the datasets into variables using `read_csv`:
+
+Manhattan_PM_10<-read_csv("datasets/ad_viz_plotval_data (3).csv")
+glimpse(Manhattan_PM_10)
+
+Bronx_PM_25<-read_csv("datasets/ad_viz_plotval_data (4).csv")
+glimpse(Bronx_PM_25)
+
+Bronx_PM_10<-read_csv("datasets/ad_viz_plotval_data (1).csv")
+glimpse(Bronx_PM_10)
+
+Manhattan_PM_25<-read_csv("datasets/ad_viz_plotval_data (5).csv")
+glimpse(Manhattan_PM_25)
+
+Bronx_Ozone<-read_csv("datasets/ad_viz_plotval_data (6).csv")
+glimpse(Bronx_Ozone)
+
+Brooklyn_PM_25<-read_csv("datasets/ad_viz_plotval_data (7).csv")
+glimpse(Brooklyn_PM_25)
+
+Staten_Island_PM_25<-read_csv("datasets/ad_viz_plotval_data (9).csv")
+glimpse(Staten_Island_PM_25)
+
+Manhattan_Ozone<-read_csv("datasets/ad_viz_plotval_data (10).csv")
+glimpse(Manhattan_Ozone)
+
+Queens_Ozone<-read_csv("datasets/ad_viz_plotval_data (12).csv")
+glimpse(Queens_Ozone)
+
+Staten_Island_Ozone<-read_csv("datasets/ad_viz_plotval_data (11).csv")
+glimpse(Staten_Island_Ozone)
+
+Queens_PM_10<-read_csv("datasets/ad_viz_plotval_data (13).csv")
+glimpse(Queens_PM_10)
+
+Queens_PM_25<-read_csv("datasets/ad_viz_plotval_data (14).csv")
+glimpse(Queens_PM_25)
+
+
+```
+
+-   Read in the csv file called `BronxOzone` from the `datasets` folder
+    BRONX:
+
+```{r view data, message=TRUE}
+
+
+
+Bronx_PM_25_filtered <- Bronx_PM_25 %>%
+  select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+Bronx_average_AQI_Value <- mean(Bronx_PM_25_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+
+
+Bronx_PM_10_filtered <- Bronx_PM_10 %>%
+    select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+
+
+Bronx_PM_10_average_Value <- mean(Bronx_PM_10_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+
+## Bronx Ozone
+
+
+Bronx_Ozone_filtered <- Bronx_Ozone %>%
+    select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+Bronx_average_AQI_Value <- mean(Bronx_Ozone_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+```
+
+MANHATTAN:
+
+```{r}
+
+Manhattan_PM_25_filtered <- Manhattan_PM_25 %>%
+   select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+Manhattan_average_AQI_Value_PM_25 <- mean(Manhattan_PM_25_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+
+
+Manhattan_PM_10 <- read_csv("datasets/ad_viz_plotval_data (3).csv")
+
+Manhattan_PM_10_filtered <- Manhattan_PM_10 %>%
+  select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+Manhattan_average_AQI_Value_PM_10 <- mean(Manhattan_PM_10_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+
+Manhattan_Ozone_filtered <- Manhattan_Ozone %>%
+select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+Manhattan_average_AQI_Value_Ozone_ <- mean(Manhattan_Ozone_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+
+```
+
+BROOKLYN:
+
+```{r}
+
+Brooklyn_PM_25_filtered <- Brooklyn_PM_25 %>%
+select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+
+Brooklyn_average_AQI_Value <- mean(Brooklyn_PM_25_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+```
+
+QUEENS:
+
+```{r}
+
+Queens_PM_25_filtered <- Queens_PM_25 %>%
+ select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+
+Queens_average_Value <- mean(Queens_PM_25_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+
+
+Queens_Ozone_filtered <- Queens_Ozone %>%
+ select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+Queens_average_Value <- mean(Queens_Ozone_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+
+
+
+Queens_PM_10_filtered <- Queens_PM_10 %>%
+select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+Queens_average_Value <- mean(Queens_PM_10_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+```
+
+STATEN ISLAND:
+
+```{r staten Island}
+
+
+Staten_Island_PM_25_filtered <- Staten_Island_PM_25 %>%
+ select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+
+Staten_Island_average_Value <- mean(Staten_Island_PM_25_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+
+
+Staten_Island_Ozone_filtered <- Staten_Island_Ozone %>%
+select(-c("Site ID", "POC", "UNITS", "DAILY_OBS_COUNT", "PERCENT_COMPLETE", 
+            "AQS_PARAMETER_CODE", "CBSA_CODE", "STATE_CODE", "STATE", "COUNTY_CODE", 
+            "COUNTY", "SITE_LATITUDE", "SITE_LONGITUDE")) %>%
+  filter(Source != "AirNow")
+Staten_Island_average_Value <- mean(Staten_Island_Ozone_filtered$DAILY_AQI_VALUE, na.rm = TRUE)
+```
+
+```{r}
+# Combining data for boxplot
+combined_data <- bind_rows(
+  Bronx_PM_25_filtered %>% mutate(Pollutant = "PM 2.5", Borough = "Bronx"),
+  Bronx_Ozone_filtered %>% mutate(Pollutant = "Ozone", Borough = "Bronx"),
+  Manhattan_PM_10_filtered %>% mutate(Pollutant = "PM 10", Borough = "Manhattan"),
+  Manhattan_PM_25_filtered %>% mutate(Pollutant = "PM 2.5", Borough = "Manhattan"),
+  Manhattan_Ozone_filtered %>% mutate(Pollutant = "Ozone", Borough = "Manhattan"),
+  Brooklyn_PM_25_filtered %>% mutate(Pollutant = "PM 2.5", Borough = "Brooklyn"),
+  Staten_Island_PM_25_filtered %>% mutate(Pollutant = "PM 2.5", Borough = "Staten Island"),
+  Staten_Island_Ozone_filtered %>% mutate(Pollutant = "Ozone", Borough = "Staten Island"),
+  Queens_PM_10_filtered %>% mutate(Pollutant = "PM 10", Borough = "Queens"),
+  Queens_PM_25_filtered %>% mutate(Pollutant = "PM 2.5", Borough = "Queens"),
+  Queens_Ozone_filtered %>% mutate(Pollutant = "Ozone", Borough = "Queens")
+)
+```{r Five-Number Summaries}
+summary_PM_25 <- combined_data %>% 
+  group_by(Borough) %>%
+  summarise(
+    Min = min(DAILY_AQI_VALUE),
+    Q1 = quantile(DAILY_AQI_VALUE, 0.25),
+    Median = median(DAILY_AQI_VALUE),
+    Q3 = quantile(DAILY_AQI_VALUE, 0.75),
+    Max = max(DAILY_AQI_VALUE)
+  )
+
+print(summary_PM_25)
+
+summary_Ozone <- combined_data %>% 
+  group_by(Borough) %>%
+  summarise(
+    Min = min(DAILY_AQI_VALUE),
+    Q1 = quantile(DAILY_AQI_VALUE, 0.25),
+    Median = median(DAILY_AQI_VALUE),
+    Q3 = quantile(DAILY_AQI_VALUE, 0.75),
+    Max = max(DAILY_AQI_VALUE)
+  )
+
+print(summary_Ozone)
+
+
+
+
+
+```{r Boxplot1}
+
+# Calculate the maximum AQI values for both PM 2.5 and Ozone
+max_aqi_pm_25 <- max(combined_data$DAILY_AQI_VALUE[combined_data$Pollutant == "PM 2.5"], na.rm = TRUE)
+max_aqi_ozone <- max(combined_data$DAILY_AQI_VALUE[combined_data$Pollutant == "Ozone"], na.rm = TRUE)
+print(max_aqi_pm_25)
+print(max_aqi_ozone)
+print(nrow(combined_data %>% filter(DAILY_AQI_VALUE == max_aqi_pm_25 & Pollutant == "PM 2.5")))
+print(nrow(combined_data %>% filter(DAILY_AQI_VALUE == max_aqi_ozone & Pollutant == "Ozone")))
+
+
+
+boxplot_PM_25 <- ggplot(combined_data, aes(x = Borough, y = DAILY_AQI_VALUE, fill = Borough)) + 
+  geom_boxplot() +
+  labs(title = "Boxplot of Daily AQI Value for PM 2.5 across Boroughs",
+       x = "Borough",
+       y = "Daily AQI Value") +
+  theme_minimal() +
+  scale_fill_brewer(palette="Dark2")
+
+print(boxplot_PM_25)
+
+boxplot_Ozone <- ggplot(combined_data, aes(x = Borough, y = DAILY_AQI_VALUE, fill = Borough)) + 
+  geom_boxplot() +
+  labs(title = "Boxplot of Daily AQI Value for Ozone across Boroughs",
+       x = "Borough",
+       y = "Daily AQI Value") +
+  theme_minimal() +
+  scale_fill_brewer(palette="Dark1")
+
+print(boxplot_Ozone)
+ggplot(combined_data %>% filter(DAILY_AQI_VALUE == max_aqi_pm_25 & Pollutant == "PM 2.5"), 
+       aes(x = Borough, y = DAILY_AQI_VALUE)) +
+geom_point(size = 10, shape = 21) + 
+geom_text(aes(label = sprintf("Max AQI: %d", DAILY_AQI_VALUE)), vjust = -2, size = 5)
+
+
+# Annotating the Boxplot for PM 2.5
+boxplot_PM_25 <- boxplot_PM_25 +
+  geom_point(data = combined_data %>% 
+               filter(DAILY_AQI_VALUE == max_aqi_pm_25 & Pollutant == "PM 2.5"),
+             aes(x = Borough, y = DAILY_AQI_VALUE, fill = Borough), 
+             size = 5, shape = 23, inherit.aes = FALSE) +
+  geom_text(data = combined_data %>% 
+              filter(DAILY_AQI_VALUE == max_aqi_pm_25 & Pollutant == "PM 2.5"),
+            aes(x = Borough, y = DAILY_AQI_VALUE, label = sprintf("Max AQI: %d", DAILY_AQI_VALUE)),
+            vjust = -1, inherit.aes = FALSE)
+
+# Annotating the Boxplot for Ozone
+boxplot_Ozone <- boxplot_Ozone +
+  geom_point(data = combined_data %>% 
+               filter(DAILY_AQI_VALUE == max_aqi_ozone & Pollutant == "Ozone"),
+             aes(x = Borough, y = DAILY_AQI_VALUE, fill = Borough), 
+             size = 5, shape = 23, inherit.aes = FALSE) +
+  geom_text(data = combined_data %>% 
+              filter(DAILY_AQI_VALUE == max_aqi_ozone & Pollutant == "Ozone"),
+            aes(x = Borough, y = DAILY_AQI_VALUE, label = sprintf("Max AQI: %d", DAILY_AQI_VALUE)),
+            vjust = -1, inherit.aes = FALSE)
+
+
+
+
+
+```
+```{r Measures_PM_25}
+pm_25_data <- combined_data %>% filter(Pollutant == "PM 2.5")
+
+pm_25_measures <- pm_25_data %>% 
+  group_by(Borough) %>% 
+  summarise(
+    Mean = mean(DAILY_AQI_VALUE, na.rm = TRUE),
+    Median = median(DAILY_AQI_VALUE, na.rm = TRUE),
+    SD = sd(DAILY_AQI_VALUE, na.rm = TRUE),
+    IQR = IQR(DAILY_AQI_VALUE, na.rm = TRUE)
+  )
+
+pm_25_measures
+```
+
+## Measures of Center and Spread for Ozone
+
+```{r Scatterplot Ozone}
+scatter_Ozone <- ggplot(combined_data %>% filter(Pollutant == "Ozone"), 
+                        aes(x = Borough, y = DAILY_AQI_VALUE, color = Borough)) +
+  geom_jitter(width = 0.3, height = 0, size = 2, alpha = 0.6) + 
+  labs(title = "Scatterplot of Ozone by Borough", 
+       x = "Borough", 
+       y = "Daily AQI Value") +
+  theme_minimal()
+
+print(scatter_Ozone)
+```
+
+## Scatterplot for PM 2.5
+
+```{r Scatterplot_PM_25}
+# Scatterplots with Faceting for PM 2.5 and Ozone
+ggplot(combined_data, aes(x = Borough, y = DAILY_AQI_VALUE, color = Pollutant)) +
+  geom_point() +
+  facet_wrap(~ Pollutant) +
+  labs(title = "Distribution of PM 2.5 and Ozone in different boroughs",
+       x = "Borough",
+       y = "AQI Value",
+       color = "Pollutant Type") +
+  theme_minimal()
+
+```
+
+```{r Measures_Ozone}
+ozone_data <- combined_data %>% filter(Pollutant == "Ozone")
+max_aqi <- max(combined_data$DAILY_AQI_VALUE, na.rm = TRUE)
+
+ozone_measures <- ozone_data %>% 
+  group_by(Borough) %>% 
+  summarise(
+    Mean = mean(DAILY_AQI_VALUE, na.rm = TRUE),
+    Median = median(DAILY_AQI_VALUE, na.rm = TRUE),
+    SD = sd(DAILY_AQI_VALUE, na.rm = TRUE),
+    IQR = IQR(DAILY_AQI_VALUE, na.rm = TRUE)
+  )
+
+ozone_measures
+```{r Scatterfacet}
+combined_data$Date <- as.Date(combined_data$Date)
+max_aqi <- max(combined_data$DAILY_AQI_VALUE, na.rm = TRUE)
+
+
+# Annotating for PM 2.5 scatter plot
+scatter_PM_25 <- ggplot(combined_data %>% filter(Pollutant == "PM 2.5"), 
+                        aes(x = Borough, y = DAILY_AQI_VALUE, fill = Borough)) +
+  geom_jitter(aes(color = Borough), width = 0.3, height = 0, size = 2, alpha = 0.6) +
+  labs(title = "Scatterplot of PM 2.5 by Borough", 
+       x = "Borough", 
+       y = "Daily AQI Value") +
+  theme_minimal() +
+  geom_point(data = combined_data %>% 
+               filter(DAILY_AQI_VALUE == max_aqi & Pollutant == "PM 2.5"),
+             aes(fill = Borough), size = 5, shape = 23) +
+  geom_text(data = combined_data %>% 
+              filter(DAILY_AQI_VALUE == max_aqi & Pollutant == "PM 2.5"),
+            aes(label = sprintf("Max AQI: %d", DAILY_AQI_VALUE)),
+            vjust = -1)
+
+print(scatter_PM_25)
+
+# Histogram and Density Plot for PM 2.5
+ggplot(combined_data %>% filter(Pollutant == "PM 2.5"), aes(x = DAILY_AQI_VALUE)) +
+  geom_histogram(aes(y = ..density..), binwidth = 5, fill = "deeppink", alpha = 0.5) +
+  geom_density(color = "navy") +
+  labs(title = " Histogram and density plot to show the frequency distribution of PM 2.5 AQI values",
+       x = "AQI Value for PM 2.5",
+       y = "Density") +
+  theme_minimal()
+
+# Histogram and Density Plot for Ozone
+ggplot(combined_data %>% filter(Pollutant == "Ozone"), aes(x = DAILY_AQI_VALUE)) +
+  geom_histogram(aes(y = ..density..), binwidth = 5, fill = "gold", alpha = 0.5) +
+  geom_density(color = "black") +
+  labs(title = "Histogram and Density Plot showing the distribution of Ozone AQI values",
+       x = "AQI Value for Ozone",
+       y = "Density") +
+  theme_minimal()
